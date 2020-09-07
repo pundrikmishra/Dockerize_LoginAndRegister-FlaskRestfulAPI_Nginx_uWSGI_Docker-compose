@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  flask:
+    build:
+      context: .
+      dockerfile: "./Dockerfile"
+    ports:
+      - "5000:5000"
+    # expose: 
+    #   - 8080
+    # entrypoint: /appmain/entrypoint.sh       ## If you use this in Dockerfile, then also use here, otherwise not use, program run even you not use this
+    links:
+      - mongo
+  mongo:
+    image: mongo:latest
+    # volumes:
+    # - ./data:/data/mongo                    ## without this line it is also work
+
+  nginx:
+    build: ./nginx
+    # container_name: ./nginx
+    restart: always
+    ports: 
+      - "80:80"
+    # volumes:                                ## without this line it is also work
+    # - ./nginx/conf.d/:/etc/nginx/conf.d/
+    # depends_on:                             ## without this line it is also work
+      #   - flask
+
+
+
